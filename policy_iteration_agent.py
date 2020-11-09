@@ -1,15 +1,16 @@
 import numpy as np
 import gym
-from gym.envs.toy_text import taxi
 
 
 class PolicyIterationAgent(object):
-    def __init__(self):
+    def __init__(self, decay_factor=0.95):
         self.problem = gym.make('Taxi-v3')
-        self.decay_factor = 0.95
+        self.decay_factor = decay_factor
         self.delta = 0.0001
         self.num_states, self.num_actions = self.problem.observation_space.n, self.problem.action_space.n
         self.R, self.T = self.evaluate_rewards_and_transitions(self.problem)
+        self.opt_policy = None
+        self.name = 'Policy Iteration Agent'
 
     def evaluate_rewards_and_transitions(self, problem):
         R = np.zeros((self.num_states, self.num_actions, self.num_states))
@@ -65,31 +66,13 @@ class PolicyIterationAgent(object):
 
         return policy
 
-    def run_simulation(self, pol_policy, render=False):
-        env = taxi.TaxiEnv()
-        t = 0
-        s_t = self.problem.reset()
-        done = False
-        score = 0  # reward sum
+    def get_action(self, s_t):
+        return self.opt_policy[s_t]
 
-        while not done and t < 100:
-            s_t, r_t, done, _ = env.step(pol_policy[s_t])
-            score += r_t
-            t += 1
-            if render:
-                env.render()
-
-        return score
+    def get_opt_policy(self):
+        return self.opt_policy
 
     def learn(self):
         opt_policy = self.policy_iteration()
-        score = []
-        for _ in range(1000):
-            score.append(self.run_simulation(opt_policy))
-
-        print('opt_policy:', opt_policy.tolist())
-        print('average score:', np.average(score))
-        print('---- start simulation ----')
-        print(self.run_simulation(opt_policy, render=True))
-
+        self.opt_policy = opt_policy
         return opt_policy
