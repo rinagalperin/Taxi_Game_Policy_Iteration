@@ -10,6 +10,14 @@ There is also a 10 point penalty for illegal pick-up and drop-off actions.
 ![code output example](taxi_example.png?raw=true "Taxi example")
 <br><br>
 
+## :clipboard: Code output
+the code outputs the following:
+1. optimal policy
+2. run simulation with policy iteration agent
+3. run simulation with random agent
+
+we can observe that the run using the random agent contains alot more steps than the policy iteration agent.
+
 ## :bulb: Solution
 We implement a solution using policy iteration, i.e. - finding an optimal policy if exists.
 
