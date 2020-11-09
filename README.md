@@ -16,7 +16,7 @@ We implement a solution using policy iteration, i.e. - finding an optimal policy
 ## :clipboard: Code
 At each run the code does the following: 
 1. Computes the optimal policy (using the ["learn" function](policy_iteration_agent.py) to train the agent)
-2. Performs a single simulation run for the optrimal policy ([the simulator](simulation_runner.py) gets the agent as input and uses function "get_action")
+2. Performs a single simulation run for the optimal policy ([the simulator](simulation_runner.py) gets the agent as input and uses function "get_action")
 3. for each state in the check_states array, we print the number representing the state and the value function of the state.
 
 ## :email: Contact
