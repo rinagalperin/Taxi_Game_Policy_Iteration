@@ -7,7 +7,7 @@ We receive +20 points for a successful dropoff, and lose 1 point for every times
 There is also a 10 point penalty for illegal pick-up and drop-off actions.
 
 <br><br>
-![code output example](taxi.png?raw=true "Taxi example")
+![code output example](taxi_example.png?raw=true "Taxi example")
 <br><br>
 
 ## :bulb: Solution
