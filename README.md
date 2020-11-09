@@ -10,13 +10,11 @@ There is also a 10 point penalty for illegal pick-up and drop-off actions.
 ![code output example](taxi_example.png?raw=true "Taxi example")
 <br><br>
 
-## :clipboard: Code output
-the code outputs the following:
-1. optimal policy
-2. run simulation with policy iteration agent
-3. run simulation with random agent
-
-we can observe that the run using the random agent contains alot more steps than the policy iteration agent.
+## :clipboard: Code
+At each run the code does the following: 
+1. Computes the optimal policy (using the ["learn" function to](policy_iteration_agent.py) train the agent)
+2. Performs a single simulation run for the optrimal policy ([the simulator](simulation_runner.py) gets the agent as input and uses function "get_action")
+3. for each state in the check_states array, we print the number representing the state and the value function of the state.
 
 ## :bulb: Solution
 We implement a solution using policy iteration, i.e. - finding an optimal policy if exists.
