@@ -7,7 +7,7 @@ class SimulationRunner:
         self.problem = gym.make('Taxi-v3')
 
     def run_simulation(self, agent):
-        print('---- start simulation with {} ----'.format(agent.name))
+        print('---- start simulation whit {} ----'.format(agent.name))
         env = taxi.TaxiEnv()
         t = 0
         s_t = self.problem.reset()

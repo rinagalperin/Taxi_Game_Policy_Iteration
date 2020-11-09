@@ -8,6 +8,7 @@ class PolicyIterationAgent(object):
         self.decay_factor = decay_factor
         self.delta = 0.0001
         self.num_states, self.num_actions = self.problem.observation_space.n, self.problem.action_space.n
+        self.check_states = list(range(self.num_states))
         self.R, self.T = self.evaluate_rewards_and_transitions(self.problem)
         self.opt_policy = None
         self.name = 'Policy Iteration Agent'
@@ -70,7 +71,8 @@ class PolicyIterationAgent(object):
         return self.opt_policy[s_t]
 
     def get_opt_policy(self):
-        return self.opt_policy
+
+        return {i: self.opt_policy[i] for i in self.check_states}
 
     def learn(self):
         opt_policy = self.policy_iteration()
