@@ -7,6 +7,11 @@ class SimulationRunner:
         self.problem = gym.make('Taxi-v3')
 
     def run_simulation(self, agent):
+        """
+        given an agent, run simulation of the Taxi game.
+        :param agent: agent
+        :return: accumulated reward
+        """
         print('---- start simulation whit {} ----'.format(agent.name))
         env = taxi.TaxiEnv()
         t = 0

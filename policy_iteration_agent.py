@@ -14,6 +14,12 @@ class PolicyIterationAgent(object):
         self.name = 'Policy Iteration Agent'
 
     def evaluate_rewards_and_transitions(self, problem):
+        """
+        given a problem, the method returns the rewards (R[state, action, next_state]) and transitions probabilities
+        (T[state, action, next_state]).
+        :param problem: problem from AI gym
+        :return: R, T as described above
+        """
         R = np.zeros((self.num_states, self.num_actions, self.num_states))
         T = np.zeros((self.num_states, self.num_actions, self.num_states))
 
@@ -33,29 +39,49 @@ class PolicyIterationAgent(object):
         encoded_policy[np.arange(shape[0]), policy] = 1
         return encoded_policy
 
-    def get_net_q(self, v_t):
-        v_next = np.zeros((self.num_states, self.num_actions))
+    def get_next_q(self, v_t):
+        """
+        given v_t (current estimation of the value function), calculates the Q function
+        :param v_t: current estimation of the value function
+        :return: Q
+        """
+        Q = np.zeros((self.num_states, self.num_actions))
 
         for s in range(self.num_states):
             for a in range(self.num_actions):
-                v_next[s][a] = np.sum(self.T[s][a] * (self.R[s][a] + self.decay_factor * v_t))
+                Q[s][a] = np.sum(self.T[s][a] * (self.R[s][a] + self.decay_factor * v_t))
 
-        return v_next
+        return Q
 
     def policy_estimate(self, policy):
+        """
+        estimates the value function if a given policy
+        :param policy: array of actions for each state
+        :return: estimation of the value function
+        """
         value_fn = np.zeros(self.num_states)
         while True:
             previous_value_fn = value_fn.copy()
-            Q = self.get_net_q(value_fn)
+            Q = self.get_next_q(value_fn)
             value_fn = np.sum(self.encode_policy(policy, (self.num_states, self.num_actions)) * Q, 1)
             if np.max(np.abs(previous_value_fn - value_fn)) < self.delta:
                 return value_fn
 
-    def policy_update(self, value_fn):
-        Q = self.get_net_q(value_fn)
+    def policy_update(self, v_t):
+        """
+        given a value function, calculates the Q function accordingly and updates the policy using arg_max
+        among all possible states.
+        :param v_t: current estimation of the value function
+        :return: updated policy
+        """
+        Q = self.get_next_q(v_t)
         return np.argmax(Q, axis=1)
 
     def policy_iteration(self):
+        """
+        alternate between estimation of the value function and update the next policy until convergence.
+        :return: optimal policy
+        """
         policy = np.array([self.problem.action_space.sample() for _ in range(self.num_states)])
 
         while True:
