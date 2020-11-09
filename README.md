@@ -1,4 +1,4 @@
-# Reinforcement learning task: Taxi-v3 from openAI 
+# Reinforcement learning task: Taxi-v3 from openAI gym
 
 ## :dart: Goal ([source](https://gym.openai.com/envs/Taxi-v3/))
 This task was introduced to illustrate some issues in hierarchical reinforcement learning.
